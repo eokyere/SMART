@@ -36,3 +36,5 @@ nosetests.xml
 
 env/
 tmp/
+*.log
+smartapp.db
