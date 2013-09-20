@@ -1,16 +1,16 @@
-# Django settings for smartapp project.
+# Django settings for smart project.
 
 import os
 
 # The top directory for this project. Contains requirements/, manage.py,
-# and README.rst, a smartapp directory with settings etc (see
+# and README.rst, a smart directory with settings etc (see
 # PROJECT_PATH), as well as a directory for each Django app added to this
 # project.
 PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 # The directory with this project's templates, settings, urls, static dir,
 # wsgi.py, fixtures, etc.
-PROJECT_PATH = os.path.join(PROJECT_ROOT, 'smartapp')
+PROJECT_PATH = os.path.join(PROJECT_ROOT, 'smart')
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -24,7 +24,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'smartapp.db',
+        'NAME': 'smart.db',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -88,7 +88,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '+_(c0)2u8mp3o(g(+oe1wkho-0ebklzqai(6e%k)g10td67ozc'
+SECRET_KEY = 'bk*j3$4z%t_o-xey!)+eff)!4b9l=0bkv0+dhlht2kaeytc=o6'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -116,10 +116,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'smartapp.urls'
+ROOT_URLCONF = 'smart.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'smartapp.wsgi.application'
+WSGI_APPLICATION = 'smart.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
@@ -188,15 +188,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    
     # External apps
     'django_nose',
-    
     #'djtables',  # required by rapidsms.contrib.locations
     'django_tables2',
     'selectable',
     'south',
-    
     # RapidSMS
     'rapidsms',
     'rapidsms.backends.database',
@@ -215,12 +212,28 @@ INSTALLED_BACKENDS = {
     },
 
     'kannel-fake-smsc' : {
-        'ENGINE':  'rapidsms.backends.kannel.KannelBackend',
+        'ENGINE': 'rapidsms.backends.kannel.KannelBackend',
         'sendsms_url': 'http://smart.vm:13013/cgi-bin/sendsms',
-        'sendsms_params': {'smsc': 'FAKE',
-                           'from': '123', # not set automatically by SMSC
-                           'username': 'rapidsms',
-                           'password': 'admin'}, # or set in localsettings.py
+        'sendsms_params': {
+            'smsc': 'FAKE',
+            'from': '123', # not set automatically by SMSC
+            'username': 'rapidsms',
+            'password': 'admin' # or set in localsettings.py
+        },
+        'coding': 0,
+        'charset': 'ascii',
+        'encode_errors': 'ignore', # strip out unknown (unicode) characters
+    },    
+
+    'kannel-tigo-smsc' : {
+        'ENGINE': 'rapidsms.backends.kannel.KannelBackend',
+        'sendsms_url': 'http://smart.vm:13013/cgi-bin/sendsms',
+        'sendsms_params': {
+            'smsc': 'tigo',
+            'from': '+233570060342', # not set automatically by SMSC
+            'username': 'rapidsms',
+            'password': 'admin' # or set in localsettings.py
+        }, 
         'coding': 0,
         'charset': 'ascii',
         'encode_errors': 'ignore', # strip out unknown (unicode) characters

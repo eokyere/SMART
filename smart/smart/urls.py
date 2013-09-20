@@ -26,4 +26,6 @@ urlpatterns = patterns('',
 
     url(r'^backend/kannel-fake-smsc/$',
         KannelBackendView.as_view(backend_name='kannel-fake-smsc')),
+    url(r'^backend/kannel-tigo-smsc/$',
+        KannelBackendView.as_view(backend_name='kannel-tigo-smsc')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
